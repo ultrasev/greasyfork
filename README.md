@@ -1,40 +1,42 @@
 # Userscripts
 
-Userscripts published to [Greasy Fork](https://greasyfork.org) via GitHub Pages auto-sync.
+油猴脚本，部署在 Cloudflare Pages。
 
-## How It Works
+## 如何工作
 
-1. Edit any script in `scripts/*.user.js`
-2. Bump `@version` in the script header
-3. Push to `main` (or push a `v*` tag)
-4. GitHub Actions validates metadata and deploys to GitHub Pages
-5. Greasy Fork fetches the updated file from the Pages URL automatically
+1. 编辑 `public/*.user.js` 中的脚本
+2. 脚本版本号 `@version` +1
+3. 推送到 GitHub
+4. Cloudflare Pages 自动部署
+5. Greasy Fork 从 URL 自动同步更新
 
-## Scripts
+## 脚本列表
 
-| Script | Pages URL | Greasy Fork |
-|--------|-----------|-------------|
-| goto_xueqiu | `https://<YOUR_USERNAME>.github.io/<REPO_NAME>/goto_xueqiu.user.js` | _(add link after first publish)_ |
+| 脚本 | 部署 URL |
+|------|----------|
+| goto_xueqiu | `https://greasyfork.pages.dev/goto_xueqiu.user.js` |
 
-> Replace `<YOUR_USERNAME>` and `<REPO_NAME>` with your actual GitHub username and repo name.
+## 添加新脚本
 
-## Add a New Script
+1. 将 `.user.js` 文件放到 `public/` 目录
+2. 确保头部包含 `@name`、`@version`、`@match`
+3. 更新 `public/index.html` 添加脚本入口
+4. 推送到 GitHub，Cloudflare Pages 自动部署
 
-1. Put the `.user.js` file under `scripts/`
-2. Make sure the `==UserScript==` header contains `@name`, `@version`, and at least one `@match`
-3. Push — the workflow picks it up automatically
-4. Go to Greasy Fork → your script page → **Sync** → enter the Pages URL
+## Cloudflare Pages 设置（一次性）
 
-## One-time GitHub Setup
+### 连接 Git 仓库
 
-### Enable GitHub Pages
+1. 打开 https://dash.cloudflare.com/ → Pages
+2. 创建项目 → 连接到 Git
+3. 选择 `greasyfork` 仓库
+4. 构建设置：
+   - 构建命令：留空
+   - 构建输出目录：`public`
+5. 部署
 
-1. Go to **Settings → Pages**
-2. Source: **GitHub Actions**
-3. Save
+### 配置 Greasy Fork 同步 URL（每个脚本一次）
 
-### Configure Greasy Fork Sync URL (once per script)
-
-1. On Greasy Fork, open your script → **Edit → Update from external URL**
-2. Enter: `https://<YOUR_USERNAME>.github.io/<REPO_NAME>/<script-filename>.user.js`
-3. Save — future pushes sync automatically
+1. Greasy Fork 打开脚本 → 编辑 → 从外部 URL 更新
+2. 输入：`https://greasyfork.pages.dev/<脚本名>.user.js`
+3. 保存 — 以后推送自动同步
