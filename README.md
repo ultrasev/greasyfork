@@ -14,7 +14,7 @@
 
 | 脚本 | 部署 URL |
 |------|----------|
-| goto_xueqiu | `https://greasyfork.pages.dev/goto_xueqiu.user.js` |
+| goto_xueqiu | `https://greasyfork.tpz.works.dev/goto_xueqiu.user.js` |
 
 ## 添加新脚本
 
@@ -38,5 +38,5 @@
 ### 配置 Greasy Fork 同步 URL（每个脚本一次）
 
 1. Greasy Fork 打开脚本 → 编辑 → 从外部 URL 更新
-2. 输入：`https://greasyfork.pages.dev/<脚本名>.user.js`
+2. 输入：`https://greasyfork.tpz.works.dev/<脚本名>.user.js`
 3. 保存 — 以后推送自动同步
