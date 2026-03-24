@@ -2,7 +2,7 @@
 // @name         东方财富行情页/基金页 -> 雪球跳转按钮(蓝色, 含科创板/港股/基金/ETF联接)
 // @name:zh-CN   东方财富行情页/基金页 -> 雪球跳转按钮(蓝色, 含科创板/港股/基金/ETF联接)
 // @namespace    https://example.com/
-// @version      1.5
+// @version      1.6
 // @description  Add a Xueqiu jump button to Eastmoney quote and fund pages, with support for STAR Market, HK stocks, funds, related ETFs, and custom fund mappings.
 // @description:zh-CN 在东方财富行情页和基金页添加“雪球”跳转按钮，支持 A股、科创板、港股、基金、相关 ETF 优先跳转，以及自定义基金映射。
 // @license      MIT
@@ -31,6 +31,7 @@
   const CUSTOM_FUND_SYMBOL_MAP = {
     "012414": "SZ161725",
     "021760": "SZ159992",
+    "010365": "SH501025",
   };
 
   function hostType() {
