@@ -15,6 +15,7 @@
 | 脚本 | 部署 URL |
 |------|----------|
 | goto_xueqiu | `https://greasyfork.tpz.works.dev/goto_xueqiu.user.js` |
+| eastmoney_highlight_name | `https://greasyfork.tpz.works.dev/eastmoney_highlight_name.user.js` |
 
 ## 添加新脚本
 
