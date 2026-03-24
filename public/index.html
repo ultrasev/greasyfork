@@ -9,27 +9,90 @@
     h1 { border-bottom: 1px solid #eee; padding-bottom: 10px; }
     .script { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 6px; }
     .script-name { font-weight: bold; font-size: 1.1em; }
+    .script-meta { font-size: 0.85em; color: #999; margin: 5px 0; }
+    .script-meta span { margin-right: 15px; }
     .script-desc { color: #666; margin: 5px 0; }
     .install-btn { display: inline-block; margin-top: 10px; padding: 6px 12px; background: #1677ff; color: white; text-decoration: none; border-radius: 4px; }
     .install-btn:hover { background: #4096ff; }
+    .loading { text-align: center; color: #999; padding: 40px; }
   </style>
 </head>
 <body>
   <h1>油猴脚本</h1>
+  <div id="scripts-container" class="loading">加载中...</div>
 
-  <div class="script">
-    <div class="script-name">东方财富行情页/基金页 - 雪球跳转按钮</div>
-    <div class="script-desc">在东方财富行情页和基金页添加"雪球"跳转按钮，支持 A股、科创板、港股、基金、相关 ETF 优先跳转</div>
-    <a href="goto_xueqiu.user.js" class="install-btn">安装脚本</a>
-    <a href="goto_xueqiu.user.js" style="margin-left: 10px; color: #666;">查看源码</a>
-  </div>
+  <script>
+    const SCRIPT_FILES = [
+      'goto_xueqiu.user.js',
+      'eastmoney_highlight_name.user.js'
+    ];
 
-  <div class="script">
-    <div class="script-name">Eastmoney 自选股：仅名称变黄</div>
-    <div class="script-desc">在东方财富网站高亮显示自选股名称</div>
-    <a href="eastmoney_highlight_name.user.js" class="install-btn">安装脚本</a>
-    <a href="eastmoney_highlight_name.user.js" style="margin-left: 10px; color: #666;">查看源码</a>
-  </div>
+    function parseUserScriptMeta(content) {
+      const meta = {};
+      const lines = content.split('\n');
+      let inMeta = false;
 
+      for (const line of lines) {
+        if (line.includes('==UserScript==')) {
+          inMeta = true;
+          continue;
+        }
+        if (line.includes('==/UserScript==')) {
+          break;
+        }
+        if (inMeta) {
+          const match = line.match(/\/\/ @(\w+)\s+(.+)/);
+          if (match) {
+            const [, key, value] = match;
+            meta[key] = value;
+          }
+        }
+      }
+      return meta;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
+
+    async function fetchScripts() {
+      const container = document.getElementById('scripts-container');
+      container.innerHTML = '';
+
+      for (const filename of SCRIPT_FILES) {
+        try {
+          const response = await fetch(filename + '?t=' + Date.now());
+          const content = await response.text();
+          const meta = parseUserScriptMeta(content);
+
+          const scriptEl = document.createElement('div');
+          scriptEl.className = 'script';
+
+          const name = meta['name'] || meta['name:zh-CN'] || filename;
+          const desc = meta['description:zh-CN'] || meta['description'] || '';
+          const version = meta['version'] || '-';
+          const license = meta['license'] || '-';
+
+          scriptEl.innerHTML = `
+            <div class="script-name">${name}</div>
+            <div class="script-meta">
+              <span>版本: ${version}</span>
+              <span>许可证: ${license}</span>
+            </div>
+            <div class="script-desc">${desc}</div>
+            <a href="${filename}" class="install-btn">安装脚本</a>
+            <a href="${filename}" style="margin-left: 10px; color: #666;">查看源码</a>
+          `;
+
+          container.appendChild(scriptEl);
+        } catch (err) {
+          console.error(`Failed to load ${filename}:`, err);
+        }
+      }
+    }
+
+    fetchScripts();
+  </script>
 </body>
 </html>
