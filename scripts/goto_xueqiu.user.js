@@ -6,6 +6,8 @@
 // @description  Add a Xueqiu jump button to Eastmoney quote and fund pages, with support for STAR Market, HK stocks, funds, related ETFs, and custom fund mappings.
 // @description:zh-CN 在东方财富行情页和基金页添加“雪球”跳转按钮，支持 A股、科创板、港股、基金、相关 ETF 优先跳转，以及自定义基金映射。
 // @license      MIT
+// @updateURL    https://ultrasev.github.io/greasyfork/goto_xueqiu.user.js
+// @downloadURL  https://ultrasev.github.io/greasyfork/goto_xueqiu.user.js
 // @match        https://quote.eastmoney.com/sz*.html
 // @match        https://quote.eastmoney.com/sz*.html?*
 // @match        https://quote.eastmoney.com/sh*.html
