@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Eastmoney 自选股：仅名称变黄
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  在东方财富网站高亮显示自选股名称
 // @match        *://*.eastmoney.com/*
 // @grant        none
@@ -13,7 +13,7 @@
 (function () {
   "use strict";
 
-  const TARGET = ["中国电信","兴业银行","伯特利","蔚蓝锂芯","杭州银行","重庆银行","成都银行","海康威视","羚锐制药","成都燃气","梅花生物","浦发银行","南京银行"]; // 需要高亮的名称
+  const TARGET = ["中国电信","兴业银行","伯特利","蔚蓝锂芯","杭州银行","重庆银行","成都银行","海康威视","羚锐制药","成都燃气","梅花生物","浦发银行","南京银行","长江电力","工业富联"]; // 需要高亮的名称
   const COLOR = "#ffb300";     // 黄色系（可改成 #ff0 更亮）
 
   function markNameEl(el) {
