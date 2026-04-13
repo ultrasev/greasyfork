@@ -5,22 +5,173 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Greasyfork Scripts</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-    h1 { border-bottom: 1px solid #eee; padding-bottom: 10px; }
-    .script { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 6px; }
-    .script-name { font-weight: bold; font-size: 1.1em; margin-bottom: 4px; }
-    .script-meta { font-size: 0.8em; color: #999; margin-bottom: 6px; }
-    .script-desc { color: #666; font-size: 0.9em; margin-bottom: 10px; line-height: 1.4; }
-    .btn-group { display: flex; gap: 10px; }
-    .btn { display: inline-block; padding: 6px 14px; background: #1677ff; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
-    .btn:hover { background: #4096ff; }
-    .btn-secondary { background: #fff; color: #666; border: 1px solid #ddd; }
-    .btn-secondary:hover { background: #f5f5f5; }
+    :root {
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+      background: #f5f6f8;
+      color: #1f2328;
+    }
+
+    .page-header {
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: #57606a;
+      font-size: 14px;
+    }
+
+    .result-count {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #d8dee4;
+      background: #fff;
+      font-size: 13px;
+      color: #57606a;
+      white-space: nowrap;
+    }
+
+    .script-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .script-card {
+      background: #fff;
+      border: 1px solid #d8dee4;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 2px rgba(31, 35, 40, 0.06);
+    }
+
+    .script-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .script-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .script-index {
+      min-width: 26px;
+      height: 26px;
+      border-radius: 13px;
+      border: 1px solid #c9d1d9;
+      background: #f0f3f6;
+      color: #57606a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .script-name {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .script-meta {
+      font-size: 12px;
+      color: #57606a;
+      margin-bottom: 8px;
+    }
+
+    .script-desc {
+      color: #24292f;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #1f6feb;
+      border-color: #1f6feb;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #2f81f7;
+      border-color: #2f81f7;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      border-color: #c9d1d9;
+      color: #24292f;
+    }
+
+    .btn-secondary:hover {
+      background: #f6f8fa;
+    }
+
+    .empty-state {
+      border: 1px dashed #c9d1d9;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      color: #57606a;
+      background: #fff;
+    }
   </style>
 </head>
 <body>
-  <h1>油猴脚本</h1>
-  <div id="scripts-container" style="color:#999;">加载中...</div>
+  <header class="page-header">
+    <h1>油猴脚本</h1>
+    <p class="subtitle">卡片式展示脚本，长列表也更容易浏览和定位。</p>
+  </header>
+
+  <div id="result-count" class="result-count">加载中...</div>
+
+  <div id="scripts-container" class="script-list"></div>
 
   <script>
     const SCRIPT_FILES = [
@@ -34,6 +185,9 @@
       'xueqiu_to_eps.user.js',
       'eastmoney_update_cookie.user.js'
     ];
+
+    const scriptsContainer = document.getElementById('scripts-container');
+    const resultCountEl = document.getElementById('result-count');
 
     function parseUserScriptMeta(content) {
       const meta = {};
@@ -49,7 +203,7 @@
           break;
         }
         if (inMeta) {
-          const match = line.match(/\/\/ @(\w+)\s+(.+)/);
+          const match = line.match(/\/\/ @(\S+)\s+(.+)/);
           if (match) {
             const [, key, value] = match;
             meta[key] = value;
@@ -59,39 +213,105 @@
       return meta;
     }
 
-    async function fetchScripts() {
-      const container = document.getElementById('scripts-container');
-      container.innerHTML = '';
+    function updateCount(currentCount) {
+      resultCountEl.textContent = `共 ${currentCount} 个脚本`;
+    }
 
-      for (const filename of SCRIPT_FILES) {
-        try {
-          const response = await fetch(filename + '?t=' + Date.now());
-          const content = await response.text();
-          const meta = parseUserScriptMeta(content);
+    function createScriptCard(script, index) {
+      const card = document.createElement('article');
+      card.className = 'script-card';
 
-          const scriptEl = document.createElement('div');
-          scriptEl.className = 'script';
+      const head = document.createElement('div');
+      head.className = 'script-head';
 
-          const name = meta['name'] || meta['name:zh-CN'] || filename;
-          const desc = meta['description:zh-CN'] || meta['description'] || '';
-          const version = meta['version'] || '-';
-          const license = meta['license'] || '-';
+      const title = document.createElement('div');
+      title.className = 'script-title';
 
-          scriptEl.innerHTML = `
-            <div class="script-name">${name}</div>
-            <div class="script-meta">版本 ${version} · ${license}</div>
-            <div class="script-desc">${desc}</div>
-            <div class="btn-group">
-              <a href="${filename}" class="btn">安装脚本</a>
-              <a href="${filename}" class="btn btn-secondary">查看源码</a>
-            </div>
-          `;
+      const badge = document.createElement('span');
+      badge.className = 'script-index';
+      badge.textContent = String(index);
 
-          container.appendChild(scriptEl);
-        } catch (err) {
-          console.error(`Failed to load ${filename}:`, err);
-        }
+      const name = document.createElement('div');
+      name.className = 'script-name';
+      name.textContent = script.name;
+
+      title.appendChild(badge);
+      title.appendChild(name);
+
+      const actions = document.createElement('div');
+      actions.className = 'btn-group';
+
+      const installBtn = document.createElement('a');
+      installBtn.href = script.filename;
+      installBtn.className = 'btn btn-primary';
+      installBtn.textContent = '安装脚本';
+
+      const sourceBtn = document.createElement('a');
+      sourceBtn.href = script.filename;
+      sourceBtn.className = 'btn btn-secondary';
+      sourceBtn.textContent = '查看源码';
+
+      actions.appendChild(installBtn);
+      actions.appendChild(sourceBtn);
+
+      head.appendChild(title);
+      head.appendChild(actions);
+
+      const meta = document.createElement('div');
+      meta.className = 'script-meta';
+      meta.textContent = `版本 ${script.version} · ${script.license} · ${script.filename}`;
+
+      const desc = document.createElement('div');
+      desc.className = 'script-desc';
+      desc.textContent = script.description || '暂无描述';
+
+      card.appendChild(head);
+      card.appendChild(meta);
+      card.appendChild(desc);
+      return card;
+    }
+
+    function renderScripts(scripts) {
+      scriptsContainer.innerHTML = '';
+      updateCount(scripts.length);
+
+      if (!scripts.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = '没有可展示的脚本。';
+        scriptsContainer.appendChild(empty);
+        return;
       }
+
+      scripts.forEach((script, index) => {
+        scriptsContainer.appendChild(createScriptCard(script, index + 1));
+      });
+    }
+
+    async function fetchScripts() {
+      scriptsContainer.innerHTML = '<div class="empty-state">加载中...</div>';
+
+      const scriptResults = await Promise.all(
+        SCRIPT_FILES.map(async (filename) => {
+          try {
+            const response = await fetch(filename + '?t=' + Date.now());
+            const content = await response.text();
+            const meta = parseUserScriptMeta(content);
+            return {
+              filename,
+              name: meta['name:zh-CN'] || meta['name'] || filename,
+              description: meta['description:zh-CN'] || meta['description'] || '',
+              version: meta['version'] || '-',
+              license: meta['license'] || '-'
+            };
+          } catch (error) {
+            console.error(`Failed to load ${filename}:`, error);
+            return null;
+          }
+        })
+      );
+
+      renderScripts(scriptResults.filter(Boolean));
     }
 
     fetchScripts();
