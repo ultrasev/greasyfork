@@ -37,7 +37,7 @@
   showNbaSchedule();
 
   // 要屏蔽的关键词列表
-  const keywords = ['瀚森', '姚明', '伦纳德', '中国'];
+  const keywords = ['瀚森', '姚明', '伦纳德', '中国', 'CBA', '华为', '问界', '雷军', '鸿蒙'];
 
   // 屏蔽帖子列表中的帖子
   function hideBbsPostList() {
