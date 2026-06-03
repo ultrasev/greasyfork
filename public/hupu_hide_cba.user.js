@@ -2,7 +2,7 @@
 // @name         虎扑净化：隐藏CBA + 关键词帖子屏蔽
 // @name:zh-CN   虎扑净化：隐藏CBA + 关键词帖子屏蔽
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.6
 // @description  隐藏CBA赛程面板和导航，只显示NBA赛程，屏蔽含指定关键词的帖子
 // @description:zh-CN 隐藏CBA赛程面板和导航，只显示NBA赛程，屏蔽含指定关键词的帖子
 // @license      MIT
