@@ -2,6 +2,8 @@
 
 油猴脚本，部署在 Cloudflare Pages。
 
+主页：https://greasyfork.tpz.workers.dev/
+
 ## 如何工作
 
 1. 编辑 `public/*.user.js` 中的脚本
