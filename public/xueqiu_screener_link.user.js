@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         雪球导航添加"选股"入口（跳转选股工具）
 // @namespace    https://example.com/
-// @version      0.3
+// @version      0.4
 // @description  在雪球左侧导航「行情」上方插入「选股」链接，跳转到雪球选股工具。
 // @description:zh-CN 在雪球左侧导航「行情」上方插入「选股」链接，跳转到雪球选股工具。
 // @license      MIT
 // @updateURL    https://greasyfork.tpz.workers.dev/xueqiu_screener_link.user.js
 // @downloadURL  https://greasyfork.tpz.workers.dev/xueqiu_screener_link.user.js
-// @match        https://xueqiu.com/
-// @match        https://xueqiu.com/?*
+// @match        https://*.xueqiu.com/
+// @match        https://*.xueqiu.com/?*
 // @run-at       document-idle
 // @grant        none
 // ==/UserScript==
