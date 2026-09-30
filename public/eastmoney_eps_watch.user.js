@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         EPS详情 + 观察(自动检查)
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  东方财富概念版个股页：插入eps详情+观察；打开页面先check是否已观察
 // @match        https://quote.eastmoney.com/concept/*
 // @grant        GM_xmlhttpRequest
-// @connect      trades.cufo.cc
+// @connect      trade.cufo.cc
 // ==/UserScript==
 
 (function () {
@@ -16,9 +16,9 @@
   const code = m[2];
 
   const TOKEN = 'passport123';
-  const EPS_URL = `https://trades.cufo.cc/en/eps/${code}`;
-  const API_CHECK = `https://trades.cufo.cc/api/stock-pick/check?code=${encodeURIComponent(code)}`;
-  const API_ADD = `https://trades.cufo.cc/api/stock-pick`;
+  const EPS_URL = `https://trade.cufo.cc/en/eps/${code}`;
+  const API_CHECK = `https://trade.cufo.cc/api/stock-pick/check?code=${encodeURIComponent(code)}`;
+  const API_ADD = `https://trade.cufo.cc/api/stock-pick`;
 
   const waitFor = (sel, t = 12000) => new Promise(res => {
     const now = document.querySelector(sel);

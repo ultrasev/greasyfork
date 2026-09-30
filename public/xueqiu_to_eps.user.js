@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Xueqiu EPS 详情按钮（极简版）
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  在雪球个股页”可卖空”标签右侧插入紫色”EPS 详情”按钮，适配 2026 新版页面，纯文本定位防改版
 // @match        https://*.xueqiu.com/S/*
 // @match        https://*.xueqiu.com/s/*
@@ -27,7 +27,7 @@
     a.id = BTN_ID;
     a.dataset.code = code;
     a.textContent = 'EPS 详情';
-    a.href = `https://trades.cufo.cc/en/eps/${code}`;
+    a.href = `https://trade.cufo.cc/en/eps/${code}`;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
     Object.assign(a.style, {
